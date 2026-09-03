@@ -1,0 +1,21 @@
+# 依赖
+node_modules/
+
+# 构建产物（Vercel 会自动构建）
+dist/
+dist.zip
+
+# 环境变量（含密钥，禁止提交）
+.env
+.env.local
+.env.*.local
+
+# 对比截图（本地验证用，不需要进仓库）
+shots/
+
+# 日志和杂项
+*.log
+.DS_Store
+.claude/
+.vscode/
+.idea/
