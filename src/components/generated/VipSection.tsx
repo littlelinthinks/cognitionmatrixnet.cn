@@ -108,7 +108,7 @@ export default function VipSection() {
 
   const tierPriceMap: Record<string, { amount: number; desc: string; scene: string }> = {
     [t.vip.singleUnlock]: { amount: 19.9, desc: "单篇内参解锁", scene: "insider_unlock" },
-    [t.vip.lifetimeMember]: { amount: 99, desc: "MATRIX NET 永久 VIP 会员", scene: "vip" },
+    [t.vip.lifetimeMember]: { amount: 99, desc: "Cognition Matrix Net 永久 VIP 会员", scene: "vip" },
     [t.vip.assessmentTrial]: { amount: 9.9, desc: "AI 职场效能评测报告", scene: "assessment" },
   };
 

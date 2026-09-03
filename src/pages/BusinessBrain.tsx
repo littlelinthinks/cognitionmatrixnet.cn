@@ -26,7 +26,7 @@ export default function BusinessBrain() {
   return (
     <>
       <PageMeta
-        title={lang === "zh" ? "AI商业大脑 — MATRIX NET" : "AI Business Brain — MATRIX NET"}
+        title={lang === "zh" ? "AI商业大脑 — Cognition Matrix Net" : "AI Business Brain — Cognition Matrix Net"}
         description={lang === "zh" ? "六大AI分析引擎，驱动商业决策。市场分析、竞争分析、客户画像、销售策略、行业研究、商业机会发现。" : "Six AI analysis engines driving business decisions."}
       />
       <section className="px-4 pt-24 pb-16 md:px-6 md:pb-24">

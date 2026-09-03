@@ -63,7 +63,7 @@ export default function Insights() {
   return (
     <>
       <PageMeta
-        title={lang === "zh" ? "行业情报中心 — MATRIX NET" : "Industry Insights — MATRIX NET"}
+        title={lang === "zh" ? "行业情报中心 — Cognition Matrix Net" : "Industry Insights — Cognition Matrix Net"}
         description={lang === "zh" ? "AI驱动的行业洞察与趋势分析，覆盖AI前沿、商业趋势、行业报告、政策解读。" : "AI-driven industry insights and trend analysis."}
       />
       <section className="px-4 pt-24 pb-16 md:px-6 md:pb-24">

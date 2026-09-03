@@ -75,7 +75,7 @@ export default function Assessment() {
   return (
     <>
       <PageMeta
-        title={`${t.assessment.sectionTitle} — MATRIX NET`}
+        title={`${t.assessment.sectionTitle} — Cognition Matrix Net`}
         description={t.assessment.subtitle}
         keywords={["职场评测", "AI 评测", "职业规划", "效能分析"]}
       />

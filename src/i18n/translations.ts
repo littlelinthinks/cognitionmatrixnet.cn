@@ -16,7 +16,7 @@ export const translations = {
     },
     hero: {
       badge: "AI时代的智能决策系统",
-      title1: "MATRIX NET · 矩阵网络",
+      title1: "Cognition Matrix Net · 认知矩阵网络",
       title2: "你的AI时代智能成长与商业决策系统",
       subtitle: "发现隐藏机会，提升工作效率，建立未来竞争优势。",
       searchPlaceholder: "搜索AI工具、行业情报、商业分析...",
@@ -92,7 +92,7 @@ export const translations = {
     },
     vip: {
       badge: "会员中心",
-      sectionTitle: "MATRIX NET 会员体系",
+      sectionTitle: "Cognition Matrix Net 会员体系",
       subtitle: "选择适合你的AI时代成长方案",
       singleUnlock: "单次解锁",
       lifetimeMember: "Pro会员",
@@ -192,8 +192,8 @@ export const translations = {
       quickNav: "快速导航",
       products: "产品服务",
       contact: "联系我们",
-      disclaimer: "MATRIX NET 是面向个人与企业的AI智能决策平台。所有AI分析结果仅供参考，不构成商业投资建议。",
-      copyright: "© 2026 MATRIX NET. All rights reserved.",
+      disclaimer: "Cognition Matrix Net 是面向个人与企业的AI智能决策平台。所有AI分析结果仅供参考，不构成商业投资建议。",
+      copyright: "© 2026 Cognition Matrix Net. All rights reserved.",
     },
     common: {
       backToTop: "返回顶部",
@@ -215,7 +215,7 @@ export const translations = {
     },
     hero: {
       badge: "AI-Powered Decision System",
-      title1: "MATRIX NET",
+      title1: "Cognition Matrix Net",
       title2: "Your AI-Powered Growth & Business Decision System",
       subtitle: "Discover hidden opportunities, boost productivity, and build competitive advantages for the future.",
       searchPlaceholder: "Search AI tools, industry insights, business analysis...",
@@ -291,7 +291,7 @@ export const translations = {
     },
     vip: {
       badge: "Membership",
-      sectionTitle: "MATRIX NET Membership",
+      sectionTitle: "Cognition Matrix Net Membership",
       subtitle: "Choose your AI-era growth plan",
       singleUnlock: "Single Unlock",
       lifetimeMember: "Pro Member",
@@ -391,8 +391,8 @@ export const translations = {
       quickNav: "Quick Links",
       products: "Products",
       contact: "Contact",
-      disclaimer: "MATRIX NET is an AI-powered decision platform for individuals and enterprises. All AI analysis results are for reference only and do not constitute business investment advice.",
-      copyright: "© 2026 MATRIX NET. All rights reserved.",
+      disclaimer: "Cognition Matrix Net is an AI-powered decision platform for individuals and enterprises. All AI analysis results are for reference only and do not constitute business investment advice.",
+      copyright: "© 2026 Cognition Matrix Net. All rights reserved.",
     },
     common: {
       backToTop: "Back to Top",

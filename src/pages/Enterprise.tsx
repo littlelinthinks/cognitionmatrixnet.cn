@@ -22,7 +22,7 @@ export default function Enterprise() {
   return (
     <>
       <PageMeta
-        title={lang === "zh" ? "企业AI解决方案 — MATRIX NET" : "Enterprise AI Solutions — MATRIX NET"}
+        title={lang === "zh" ? "企业AI解决方案 — Cognition Matrix Net" : "Enterprise AI Solutions — Cognition Matrix Net"}
         description={lang === "zh" ? "为制造企业、外贸公司、创业团队、咨询公司打造专属AI智能决策系统。" : "Build your enterprise's AI-powered decision system."}
       />
       <section className="px-4 pt-24 pb-16 md:px-6 md:pb-24">

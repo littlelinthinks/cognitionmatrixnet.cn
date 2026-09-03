@@ -24,7 +24,7 @@ export default function AgentCenter() {
   return (
     <>
       <PageMeta
-        title={lang === "zh" ? "AI Agent中心 — MATRIX NET" : "AI Agent Center — MATRIX NET"}
+        title={lang === "zh" ? "AI Agent中心 — Cognition Matrix Net" : "AI Agent Center — Cognition Matrix Net"}
         description={lang === "zh" ? "输入你的行业和目标，AI自动生成市场报告、竞争分析、客户名单、营销策略、行动计划。" : "Input your industry and goals — AI generates business plans automatically."}
       />
       <section className="px-4 pt-24 pb-16 md:px-6 md:pb-24">

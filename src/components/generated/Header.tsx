@@ -42,10 +42,10 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
         <Link to="/" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-neon-blue to-neon-green">
-            <span className="text-xs font-black text-cyber-bg">M</span>
+            <span className="text-xs font-black text-cyber-bg">C</span>
           </div>
           <span className="text-lg font-bold tracking-wider text-ink-primary">
-            MATRIX<span className="text-neon-blue"> NET</span>
+            认知矩阵网络
           </span>
         </Link>
 

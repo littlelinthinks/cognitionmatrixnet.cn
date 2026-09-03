@@ -134,7 +134,7 @@ export default function Vip() {
     const result = await startPayment({
       scene: "vip",
       amount: 299,
-      description: "MATRIX NET Pro会员",
+      description: "Cognition Matrix Net Pro会员",
     });
     if (!result.success) {
       setPayError(result.error || (lang === "zh" ? "支付发起失败，请稍后重试" : "Payment failed"));
@@ -145,7 +145,7 @@ export default function Vip() {
   return (
     <>
       <PageMeta
-        title={lang === "zh" ? "会员中心 — MATRIX NET" : "Membership — MATRIX NET"}
+        title={lang === "zh" ? "会员中心 — Cognition Matrix Net" : "Membership — Cognition Matrix Net"}
         description={lang === "zh" ? "选择适合你的AI时代成长方案。免费用户、Pro会员、企业版三档权益。" : "Choose your AI-era growth plan."}
       />
       <section className="px-4 pt-24 pb-16 md:px-6 md:pb-24">

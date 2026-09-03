@@ -60,9 +60,9 @@ export default function Home() {
   return (
     <>
       <PageMeta
-        title="MATRIX NET — AI时代的智能决策系统"
-        description="发现隐藏机会，提升工作效率，建立未来竞争优势。MATRIX NET提供AI工具矩阵、AI商业大脑、行业情报、企业AI解决方案等全方位智能决策服务。"
-        keywords="AI工具,AI商业大脑,智能决策,AI Agent,企业AI,行业情报,MATRIX NET"
+        title="Cognition Matrix Net — AI时代的智能决策系统"
+        description="发现隐藏机会，提升工作效率，建立未来竞争优势。Cognition Matrix Net提供AI工具矩阵、AI商业大脑、行业情报、企业AI解决方案等全方位智能决策服务。"
+        keywords="AI工具,AI商业大脑,智能决策,AI Agent,企业AI,行业情报,Cognition Matrix Net"
       />
       <HeroSection />
       <SectionDivider />

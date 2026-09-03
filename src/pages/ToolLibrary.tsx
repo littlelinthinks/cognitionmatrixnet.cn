@@ -64,7 +64,7 @@ export default function ToolLibrary() {
   return (
     <>
       <PageMeta
-        title={`${t.tools.sectionTitle} — MATRIX NET`}
+        title={`${t.tools.sectionTitle} — Cognition Matrix Net`}
         description={lang === "zh" ? "零门槛自动化办公技术资源，限时免费下载" : "Zero-threshold automation office technology resources, free download for limited time"}
         keywords={["效率工具", "办公自动化", "数据处理", "设计素材"]}
       />

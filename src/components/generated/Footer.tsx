@@ -25,11 +25,11 @@ export default function Footer() {
           <div>
             <Link to="/" className="mb-4 flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-neon-blue to-neon-green">
-                <span className="text-xs font-black text-cyber-bg">M</span>
-              </div>
-              <span className="text-lg font-bold tracking-wider text-ink-primary">
-                MATRIX<span className="text-neon-blue"> NET</span>
-              </span>
+            <span className="text-xs font-black text-cyber-bg">C</span>
+          </div>
+          <span className="text-lg font-bold tracking-wider text-ink-primary">
+            认知矩阵网络
+          </span>
             </Link>
             <p className="text-caption leading-relaxed text-ink-secondary">
               {t.footer.desc}
