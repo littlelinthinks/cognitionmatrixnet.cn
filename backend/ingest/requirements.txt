@@ -1,0 +1,8 @@
+# Cognition Matrix — Ingestion Pipeline 依赖
+# 安装：pip install -r requirements.txt
+supabase>=2.5.0          # Supabase Python 客户端（service_role 写入）
+openai>=1.30.0           # 统一 OpenAI / DeepSeek(兼容) 聊天与 Embedding
+requests>=2.31.0         # 抓取 GitHub / HuggingFace / arXiv
+feedparser>=6.0.0        # 解析 RSS / Atom
+python-dotenv>=1.0.0     # 本地 .env 加载
+tenacity>=8.2.0          # LLM / Embedding 重试
