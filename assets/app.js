@@ -102,6 +102,48 @@ const DATA = {
         <h2>修行从最小处开始</h2>
         <p>不必一上来就苦行。今天比昨天多看清一条规律，多扛住一次冲动，多做成一件别人嫌麻烦的小事——强势文化，就是这样一寸一寸长出来的。</p>
       `
+    },
+    {
+      id: "know-to-do",
+      title: "认知突围：从「知道」到「做到」的最后一公里",
+      tag: "认知方法",
+      date: "2026-10-13",
+      excerpt: "读再多道理，不落地都是库存。真正的改变，发生在你把一条规律「用」进生活、变成肌肉记忆的那一刻。",
+      body: `
+        <p>很多人读完「文化属性」，会有一种恍然大悟的爽感。但爽感过后，生活照旧。问题出在哪？出在「知道」与「做到」之间，隔着一条被严重低估的鸿沟。</p>
+        <h2>库存不等于装备</h2>
+        <p>把道理存进脑子，就像把武器堆进仓库。仓库再满，不上战场，你还是手无寸铁。<b>认知的价值，不在于你「懂」，在于你「用」。</b></p>
+        <blockquote>知道天道，是开始；活出天道，才是修行。中间那段路，没有人替你走。</blockquote>
+        <h2>最后一公里靠什么</h2>
+        <ul>
+          <li><b>靠具体</b>：别喊「我要变强」，喊「今晚我把这条规律写成一条行动清单」；</li>
+          <li><b>靠重复</b>：一次照规律做事是巧合，一百次是习惯，一千次才是文化属性；</li>
+          <li><b>靠环境</b>：把自己放进能强化好习惯的场域，比靠意志力硬扛省十倍力气。</li>
+        </ul>
+        <h2>给自己一个「最小行动」</h2>
+        <p>别等准备好。今天就挑一条你认同的规律，落到一件最小的事上：多忍一次冲动，多问一句「规律是什么」，多扛住一次想「等靠要」的念头。认知突围，从来不是想通了才动，而是动着动着，就想通了。</p>
+      `
+    },
+    {
+      id: "weak-env-strong-self",
+      title: "在弱势环境里，活成强势文化",
+      tag: "破局思维",
+      date: "2026-10-13",
+      excerpt: "环境不由你选，但你可以选择不和它共沉沦。弱势环境里，恰恰藏着强势文化最硬的修行场。",
+      body: `
+        <p>有人问：我身边的人都在「等靠要」，我一个人较劲，是不是太傻？我的回答是：<b>弱势环境不会因为你顺从它就放过你，但它会奖励那个逆着惯性长出力量的人。</b></p>
+        <h2>环境是土壤，不是判决</h2>
+        <p>土壤贫瘠，庄稼确实难长；但难长不等于不长。强势文化的人，会把贫瘠当成训练——别人靠关系，他练本事；别人等风口，他造能力。</p>
+        <blockquote>弱势文化的悲剧，不是环境差，而是把环境当成了放弃的借口。</blockquote>
+        <h2>三种「悄悄突围」的方式</h2>
+        <ul>
+          <li><b>信息突围</b>：在周围都在聊八卦时，你给自己留一块读规律、学真东西的自留地；</li>
+          <li><b>圈子突围</b>：线上线下去靠近那些「按规律办事」的人，哪怕只是隔着屏幕观察；</li>
+          <li><b>微习惯突围</b>：每天做一件「别人不做、但符合规律」的小事，积少成多，你会慢慢脱离原来的引力。</li>
+        </ul>
+        <h2>你不是在对抗谁</h2>
+        <p>活成强势文化，不是为了证明谁错，而是为了<b>把自己从默认的弱者剧本里拽出来</b>。当你真的长出力量，你反而能成为身边人的那束光——这，才是文化属性最温柔的意义。</p>
+      `
     }
   ],
 
@@ -192,8 +234,17 @@ function viewColumn() {
 }
 
 function viewArticle(id) {
-  const a = DATA.articles.find(x => x.id === id);
-  if (!a) return viewColumn();
+  const list = DATA.articles;
+  const idx = list.findIndex(x => x.id === id);
+  if (idx === -1) return viewColumn();
+  const a = list[idx];
+  const prev = list[idx - 1];
+  const next = list[idx + 1];
+  const pager = `
+    <div class="pager">
+      ${prev ? `<a class="pager-link" href="#/article/${prev.id}">← ${prev.title}</a>` : `<span></span>`}
+      ${next ? `<a class="pager-link next" href="#/article/${next.id}">${next.title} →</a>` : `<span></span>`}
+    </div>`;
   return `
   <article class="detail fade-in">
     <a class="back" href="#/column">← 返回专栏</a>
@@ -201,7 +252,8 @@ function viewArticle(id) {
     <h1>${a.title}</h1>
     <p style="color:var(--text-dim);font-size:17px;">${a.excerpt}</p>
     ${a.body}
-    <a class="back" href="#/column" style="margin-top:30px;">← 返回专栏</a>
+    ${pager}
+    <a class="back" href="#/column" style="margin-top:18px;">← 返回专栏</a>
   </article>`;
 }
 
