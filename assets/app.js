@@ -1,5 +1,12 @@
-/* 认知矩阵 · 文化属性研读 —— 纯静态专栏站（零依赖）
- * 所有内容均为原创解读。要改文字，改这里即可。 */
+/* 认知矩阵 · 文化属性研读 —— 纯静态专栏站（零依赖，v3 基础设施版）
+ * 真实 URL 路由 + 独立 SEO meta + 关于 / 学习路径页 + 订阅位
+ * 改文字改 DATA；加文章往 articles 里加一段即可。 */
+
+const SITE = {
+  name: "认知矩阵 · 文化属性研读",
+  base: "https://cognitionmatrixnet.cn",
+  defaultDesc: "文化属性、强势文化与弱势文化、天道——一套关于认知与命运的原创解读专栏。"
+};
 
 const DATA = {
   articles: [
@@ -160,25 +167,93 @@ const DATA = {
     { q: "文化属性不是宿命，但它是惯性；你意识到它，惯性才有被改变的可能。", src: "文化属性研读" },
     { q: "天道不赏善，也不罚恶；它只回应你是否符合规律。", src: "文化属性研读" },
     { q: "忍人所不忍，是成本；能人所不能，是壁垒。二者相加，就是你的生存空间。", src: "文化属性研读" }
+  ],
+
+  learningPath: [
+    { stage: "见地", sub: "看清框架", items: ["culture-attribute", "strong-vs-weak", "tiandao"] },
+    { stage: "修行", sub: "下手用功", items: ["deng-kao-yao", "endure-can"] },
+    { stage: "知行 · 破局", sub: "落地与环境", items: ["know-to-do", "weak-env-strong-self"] }
   ]
 };
 
-/* ---------------- 渲染 ---------------- */
-const app = document.getElementById("app");
-const nav = document.getElementById("nav");
+/* ============ 基础设施：SEO meta（标题 / 描述 / canonical） ============ */
+function setMeta(title, desc) {
+  document.title = title || SITE.name;
+  let m = document.querySelector('meta[name="description"]');
+  if (!m) { m = document.createElement("meta"); m.setAttribute("name", "description"); document.head.appendChild(m); }
+  m.setAttribute("content", desc || SITE.defaultDesc);
+  let link = document.querySelector('link[rel="canonical"]');
+  if (!link) { link = document.createElement("link"); link.setAttribute("rel", "canonical"); document.head.appendChild(link); }
+  const p = currentPath();
+  link.setAttribute("href", SITE.base + (p === "/" ? "/" : p));
+}
 
-function esc(s) { return s; } // 内容为站内可信数据，直接渲染
+/* ============ 路由：真实 URL，file:// 下自动降级 hash ============ */
+function currentPath() {
+  if (location.protocol === "file:") {
+    const h = location.hash.replace(/^#/, "");
+    return (h.split("?")[0] || "/");
+  }
+  let p = location.pathname.replace(/\/index\.html$/i, "") || "/";
+  if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+  return p;
+}
 
+function navigate(path) {
+  if (location.protocol !== "file:") {
+    try { history.pushState({ path: path }, "", path); } catch (e) {}
+  } else {
+    try { location.hash = path; } catch (e) {}
+  }
+  render();
+}
+
+/* ============ 订阅区块（预留接入邮件服务） ============ */
+function subscribeBlock() {
+  return `
+  <section class="section subscribe">
+    <div class="subscribe-inner">
+      <div class="subscribe-text">
+        <h2>加入<span class="accent">研读</span>通讯</h2>
+        <p>每周一封，把一条文化属性规律讲透。不打扰，可随时退订。</p>
+      </div>
+      <form class="subscribe-form" id="subscribeForm" novalidate>
+        <input type="email" name="email" placeholder="你的邮箱" aria-label="邮箱" />
+        <button class="btn btn-primary" type="submit">订阅</button>
+      </form>
+    </div>
+    <p class="subscribe-tip" id="subscribeTip">订阅服务待接入（Buttondown / Substack），当前为占位。</p>
+  </section>`;
+}
+
+function bindSubscribe() {
+  const form = document.getElementById("subscribeForm");
+  if (!form) return;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const tip = document.getElementById("subscribeTip");
+    const email = (form.querySelector('input[name="email"]').value || "").trim();
+    if (!email || email.indexOf("@") < 1) {
+      if (tip) { tip.textContent = "请填写正确的邮箱地址。"; tip.classList.add("err"); }
+      return;
+    }
+    if (tip) { tip.textContent = "已记录你的邮箱（占位）——接入邮件服务后将自动同步。"; tip.classList.remove("err"); }
+    form.reset();
+  });
+}
+
+/* ============ 页面 ============ */
 function viewHome() {
   const featured = DATA.articles.slice(0, 3);
   return `
   <section class="hero fade-in">
+    <div class="vertical-motto" aria-hidden="true">文化屬性<br>強勢 · 弱勢<br>天道</div>
     <span class="eyebrow">文化属性 · 强势文化 · 天道</span>
     <h1>认知的另一种维度</h1>
     <p class="lead">这里是一档关于「文化属性」的原创解读专栏。我们把《天道》里那套框架，拆开来讲清楚：是什么在底层决定一个人的命运，以及，你能怎么改写它。</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="#/column">开始阅读专栏 →</a>
-      <a class="btn btn-ghost" href="#/concepts">先懂四个概念</a>
+      <a class="btn btn-primary" href="/path">从学习路径开始 →</a>
+      <a class="btn btn-ghost" href="/column">直接读专栏</a>
     </div>
   </section>
 
@@ -204,14 +279,26 @@ function viewHome() {
     </div>
     <div class="grid grid-3">
       ${featured.map(a => `
-        <div class="card article-card" data-id="${a.id}">
+        <a class="card article-card" href="/article/${a.id}">
           <span class="tag gold">${a.tag}</span>
           <h3>${a.title}</h3>
           <p class="excerpt">${a.excerpt}</p>
           <div class="meta">${a.date}</div>
-        </div>`).join("")}
+        </a>`).join("")}
     </div>
-  </section>`;
+  </section>
+
+  <section class="section path-cta">
+    <div class="path-cta-inner">
+      <div>
+        <h2>七篇，一条<span class="accent">进阶主线</span></h2>
+        <p>从见地、修行，到知行与破局——按「学习路径」走一遍，比零散读更见效。</p>
+      </div>
+      <a class="btn btn-primary" href="/path">查看学习路径 →</a>
+    </div>
+  </section>
+
+  ${subscribeBlock()}`;
 }
 
 function viewColumn() {
@@ -223,12 +310,12 @@ function viewColumn() {
     </div>
     <div class="grid grid-2">
       ${DATA.articles.map(a => `
-        <div class="card article-card" data-id="${a.id}">
+        <a class="card article-card" href="/article/${a.id}">
           <span class="tag">${a.tag}</span>
           <h3>${a.title}</h3>
           <p class="excerpt">${a.excerpt}</p>
           <div class="meta">${a.date}</div>
-        </div>`).join("")}
+        </a>`).join("")}
     </div>
   </section>`;
 }
@@ -236,25 +323,29 @@ function viewColumn() {
 function viewArticle(id) {
   const list = DATA.articles;
   const idx = list.findIndex(x => x.id === id);
-  if (idx === -1) return viewColumn();
+  if (idx === -1) return { html: viewNotFound(), meta: { title: "未找到 · 认知矩阵", desc: SITE.defaultDesc } };
   const a = list[idx];
   const prev = list[idx - 1];
   const next = list[idx + 1];
   const pager = `
     <div class="pager">
-      ${prev ? `<a class="pager-link" href="#/article/${prev.id}">← ${prev.title}</a>` : `<span></span>`}
-      ${next ? `<a class="pager-link next" href="#/article/${next.id}">${next.title} →</a>` : `<span></span>`}
+      ${prev ? `<a class="pager-link" href="/article/${prev.id}">← ${prev.title}</a>` : `<span></span>`}
+      ${next ? `<a class="pager-link next" href="/article/${next.id}">${next.title} →</a>` : `<span></span>`}
     </div>`;
-  return `
+  return {
+    html: `
   <article class="detail fade-in">
-    <a class="back" href="#/column">← 返回专栏</a>
+    <a class="back" href="/column">← 返回专栏</a>
     <div class="meta">${a.tag}　·　${a.date}</div>
     <h1>${a.title}</h1>
-    <p style="color:var(--text-dim);font-size:17px;">${a.excerpt}</p>
+    <p class="lead-p">${a.excerpt}</p>
     ${a.body}
     ${pager}
-    <a class="back" href="#/column" style="margin-top:18px;">← 返回专栏</a>
-  </article>`;
+    ${subscribeBlock()}
+    <a class="back" href="/column" style="margin-top:18px;">← 返回专栏</a>
+  </article>`,
+    meta: { title: a.title + " · 认知矩阵", desc: a.excerpt }
+  };
 }
 
 function viewConcepts() {
@@ -275,6 +366,38 @@ function viewConcepts() {
   </section>`;
 }
 
+function viewPath() {
+  const stages = DATA.learningPath.map((s, si) => {
+    const cards = s.items.map(id => {
+      const a = DATA.articles.find(x => x.id === id);
+      if (!a) return "";
+      const no = DATA.articles.findIndex(x => x.id === id) + 1;
+      return `<a class="card article-card path-card" href="/article/${a.id}">
+        <span class="path-step">第 ${no} 篇</span>
+        <h3>${a.title}</h3>
+        <p class="excerpt">${a.excerpt}</p>
+      </a>`;
+    }).join("");
+    return `
+      <div class="path-stage">
+        <div class="path-stage-head">
+          <span class="path-no">${si + 1}</span>
+          <div class="path-stage-title"><h3>${s.stage}</h3><span class="path-sub">${s.sub}</span></div>
+        </div>
+        <div class="grid grid-2">${cards}</div>
+      </div>`;
+  }).join("");
+  return `
+  <section class="page fade-in">
+    <div class="section-head">
+      <h2>学习<span class="accent">路径</span></h2>
+      <p>七篇文章，一条从「见地」到「破局」的进阶主线。按序读，或按需取。</p>
+    </div>
+    ${stages}
+    ${subscribeBlock()}
+  </section>`;
+}
+
 function viewQuotes() {
   return `
   <section class="section fade-in">
@@ -292,29 +415,89 @@ function viewQuotes() {
   </section>`;
 }
 
-/* ---------------- 路由 ---------------- */
-function route() {
-  const hash = location.hash.replace(/^#/, "") || "/";
-  let html = "";
-  if (hash.startsWith("/article/")) html = viewArticle(hash.split("/article/")[1]);
-  else if (hash === "/column") html = viewColumn();
-  else if (hash === "/concepts") html = viewConcepts();
-  else if (hash === "/quotes") html = viewQuotes();
-  else html = viewHome();
+function viewAbout() {
+  return `
+  <section class="page fade-in">
+    <div class="section-head with-seal">
+      <div>
+        <h2>关于<span class="accent">我们</span></h2>
+        <p>一间关于「文化属性」的线上研读室。</p>
+      </div>
+      <span class="seal" title="研读">閱</span>
+    </div>
+    <div class="prose">
+      <h3>我们为什么在这里</h3>
+      <p>「认知矩阵 · 文化属性研读」是一档原创解读专栏。我们不复述、不神化，只做一件事：把《天道》里那套关于<b>文化属性、强势文化与弱势文化、天道</b>的框架，拆开、讲透、落到地上。</p>
+      <p>我们相信，决定一个人命运的，往往不是某一次选择，而是那套藏在选择背后的「文化属性」。看清它，人就多一分主动权。</p>
+      <h3>我们的相信</h3>
+      <ul>
+        <li>按规律办事的人，就是神；</li>
+        <li>救世主从不存在，能救你的，只有对规律的敬畏与对自己的负责；</li>
+        <li>强势文化不是天赋，是可训练的差值。</li>
+      </ul>
+      <h3>主理人</h3>
+      <p>这里由一位长期研读《天道》与传统文化、关注认知与组织规律的写作者主理。<i>（此处可替换为团队介绍与联系方式）</i></p>
+      <blockquote>旗舰不是最大的那间店，而是最亮的那盏灯。</blockquote>
+    </div>
+    ${subscribeBlock()}
+    <div class="disclaimer">
+      <p>免责声明：本站内容均为基于「文化属性 / 天道」思想框架的<b>原创解读与评论</b>，不构成对任何作品的转载或替代；引用与化用仅为学习与讨论之用。如涉权利事宜，请联系即删。</p>
+    </div>
+  </section>`;
+}
 
-  app.innerHTML = html;
-  // 文章卡片点击跳转
-  app.querySelectorAll(".article-card").forEach(el => {
-    el.addEventListener("click", () => { location.hash = "#/article/" + el.dataset.id; });
-  });
-  // 导航高亮
+function viewNotFound() {
+  return `
+  <section class="page fade-in notfound">
+    <div class="section-head"><h2>这里<span class="accent">空无一物</span></h2><p>你要找的页面，不在这座文化矩阵里。</p></div>
+    <a class="btn btn-primary" href="/">回到首页</a>
+  </section>`;
+}
+
+/* ============ 渲染 & 事件 ============ */
+const app = document.getElementById("app");
+const nav = document.getElementById("nav");
+
+function updateNav(path) {
   nav.querySelectorAll("a").forEach(a => {
     const r = a.getAttribute("data-route");
-    a.classList.toggle("active", r === (hash === "/" ? "/" : hash));
+    const active = (r === path) || (r === "/column" && path.indexOf("/article/") === 0);
+    a.classList.toggle("active", active);
   });
+}
+
+function render() {
+  const path = currentPath();
+  let html = "", meta = { title: SITE.name, desc: SITE.defaultDesc };
+  if (path === "/") html = viewHome();
+  else if (path === "/column") { html = viewColumn(); meta.title = "专栏 · 全部文章 · 认知矩阵"; }
+  else if (path === "/concepts") { html = viewConcepts(); meta.title = "概念 · 四块基石 · 认知矩阵"; }
+  else if (path === "/path") { html = viewPath(); meta.title = "学习路径 · 认知矩阵"; }
+  else if (path === "/quotes") { html = viewQuotes(); meta.title = "语录 · 认知矩阵"; }
+  else if (path === "/about") { html = viewAbout(); meta.title = "关于我们 · 认知矩阵"; }
+  else if (path.indexOf("/article/") === 0) { const r = viewArticle(path.slice(9)); html = r.html; meta = r.meta; }
+  else { html = viewNotFound(); meta.title = "未找到 · 认知矩阵"; }
+
+  app.innerHTML = html;
+  setMeta(meta.title, meta.desc);
+  updateNav(path);
+  bindSubscribe();
   window.scrollTo({ top: 0, behavior: "auto" });
 }
 
+/* 站内链接统一走 pushState；放行新标签(Cmd/Ctrl)与外部链接 */
+document.addEventListener("click", function (e) {
+  const a = e.target.closest ? e.target.closest("a[href]") : null;
+  if (!a) return;
+  const href = a.getAttribute("href") || "";
+  if (href.charAt(0) !== "/") return;
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.getAttribute("target") === "_blank") return;
+  e.preventDefault();
+  navigate(href);
+});
+
+window.addEventListener("popstate", render);
+if (location.protocol === "file:") window.addEventListener("hashchange", render);
+
 document.getElementById("year").textContent = new Date().getFullYear();
-window.addEventListener("hashchange", route);
-route();
+render();
