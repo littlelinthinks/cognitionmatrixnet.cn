@@ -4,7 +4,7 @@
 
 ## 文件说明
 - `index.html` — 页面骨架（头部/底部/容器）
-- `assets/style.css` — 全部样式（深底青绿金配色）
+- `assets/style.css` — 全部样式（禅意科技配色：暖墨黑底 + 暗金主色 + 朱砂点睛 + 黛青微光）
 - `assets/app.js` — 内容数据 + 页面切换逻辑（**要改文字就改这里**）
 - `assets/logo.png` / `assets/favicon.ico` — 矩阵立方 logo 与标签页图标
 - `vercel.json` — 告诉 Vercel 当静态站部署、免构建
